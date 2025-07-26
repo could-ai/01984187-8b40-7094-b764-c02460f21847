@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/password.dart';
+import '../screens/news_screen.dart'; // Import the new news screen
 import 'password_detail_screen.dart';
 
 class PasswordListScreen extends StatefulWidget {
@@ -64,6 +65,14 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
     });
   }
 
+    // Navigate to news screen
+  void _navigateToNews(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const NewsScreen()),
+    );
+  }
+
   // Build password list for a specific category
   Widget _buildCategoryPasswords(Category category) {
     final passwordsInCategory = _passwords
@@ -111,6 +120,13 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Password Manager'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.article_outlined),
+              tooltip: 'China News',
+              onPressed: () => _navigateToNews(context),
+            ),
+          ],
           bottom: TabBar(
             isScrollable: true,
             tabs: _categories.map((c) => Tab(text: c.name)).toList(),
