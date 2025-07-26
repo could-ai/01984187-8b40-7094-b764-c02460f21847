@@ -3,7 +3,7 @@ class NewsArticle {
   final String source;
   final String date;
 
-  NewsArticle({
+  const NewsArticle({
     required this.title,
     required this.source,
     required this.date,
