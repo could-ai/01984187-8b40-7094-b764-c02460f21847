@@ -3,8 +3,9 @@ import '../models/password.dart';
 
 class PasswordDetailScreen extends StatefulWidget {
   final Password? password;
+  final List<Category> categories; // Accept categories
 
-  const PasswordDetailScreen({super.key, this.password});
+  const PasswordDetailScreen({super.key, this.password, required this.categories});
 
   @override
   _PasswordDetailScreenState createState() => _PasswordDetailScreenState();
@@ -15,6 +16,7 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
   late TextEditingController _websiteController;
   late TextEditingController _usernameController;
   late TextEditingController _passwordController;
+  String? _selectedCategoryId;
   bool _isPasswordVisible = false;
 
   @override
@@ -23,6 +25,12 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
     _websiteController = TextEditingController(text: widget.password?.website ?? '');
     _usernameController = TextEditingController(text: widget.password?.username ?? '');
     _passwordController = TextEditingController(text: widget.password?.password ?? '');
+    // Set initial category
+    if (widget.password != null) {
+      _selectedCategoryId = widget.password!.categoryId;
+    } else if (widget.categories.isNotEmpty) {
+      _selectedCategoryId = widget.categories.first.id;
+    }
   }
 
   @override
@@ -35,14 +43,23 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
 
   void _savePassword() {
     if (_formKey.currentState!.validate()) {
-      // NOTE: This is where you would normally save the password to a database.
-      // Since no Supabase project is connected, we will just pop the screen.
-      // In a real app, you would handle the create/update logic here.
+      if (_selectedCategoryId == null) {
+        // Show an error if no category is selected
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a category.')),
+        );
+        return;
+      }
+
+      final selectedCategory = widget.categories.firstWhere((cat) => cat.id == _selectedCategoryId);
+
       final newPassword = Password(
         id: widget.password?.id ?? DateTime.now().toIso8601String(),
         website: _websiteController.text,
         username: _usernameController.text,
         password: _passwordController.text,
+        categoryId: _selectedCategoryId!,
+        categoryName: selectedCategory.name,
       );
       Navigator.pop(context, newPassword);
     }
@@ -118,6 +135,27 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
+              if (widget.categories.isNotEmpty)
+                DropdownButtonFormField<String>(
+                  value: _selectedCategoryId,
+                  decoration: const InputDecoration(
+                    labelText: 'Category',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: widget.categories.map((Category category) {
+                    return DropdownMenuItem<String>(
+                      value: category.id,
+                      child: Text(category.name),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedCategoryId = newValue;
+                    });
+                  },
+                  validator: (value) => value == null ? 'Please select a category' : null,
+                ),
             ],
           ),
         ),
