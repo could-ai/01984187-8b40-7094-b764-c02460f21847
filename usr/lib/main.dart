@@ -14,15 +14,19 @@ class MyApp extends StatelessWidget {
       title: 'Password Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFC0C0C0), // Silver color
+        ),
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFFF5F5F5), // Light silver background
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: const Color(0xFFC0C0C0), // Silver color
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFF2A2A2A), // Dark silver background
       ),
       themeMode: ThemeMode.system,
       home: const PasswordListScreen(),
