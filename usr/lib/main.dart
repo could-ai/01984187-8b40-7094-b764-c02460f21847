@@ -15,18 +15,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFC0C0C0), // Silver color
+          seedColor: const Color(0xFFFF0000), // Red color
         ),
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5), // Light silver background
+        scaffoldBackgroundColor: const Color(0xFFFFE0E0), // Light red background
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFC0C0C0), // Silver color
+          seedColor: const Color(0xFFFF0000), // Red color
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFF2A2A2A), // Dark silver background
+        scaffoldBackgroundColor: const Color(0xFF4A0000), // Dark red background
       ),
       themeMode: ThemeMode.system,
       home: const PasswordListScreen(),
