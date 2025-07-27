@@ -5,6 +5,7 @@ class Password {
   final String password;
   final String categoryId;
   final String categoryName;
+  final bool isFavorite; // Add isFavorite field
 
   Password({
     required this.id,
@@ -13,6 +14,7 @@ class Password {
     required this.password,
     required this.categoryId,
     required this.categoryName,
+    this.isFavorite = false, // Default to false
   });
 }
 

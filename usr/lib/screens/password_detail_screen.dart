@@ -3,7 +3,7 @@ import '../models/password.dart';
 
 class PasswordDetailScreen extends StatefulWidget {
   final Password? password;
-  final List<Category> categories; // Accept categories
+  final List<Category> categories;
 
   const PasswordDetailScreen({super.key, this.password, required this.categories});
 
@@ -18,6 +18,7 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
   late TextEditingController _passwordController;
   String? _selectedCategoryId;
   bool _isPasswordVisible = false;
+  bool _isFavorite = false; // Add state for favorite toggle
 
   @override
   void initState() {
@@ -25,11 +26,13 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
     _websiteController = TextEditingController(text: widget.password?.website ?? '');
     _usernameController = TextEditingController(text: widget.password?.username ?? '');
     _passwordController = TextEditingController(text: widget.password?.password ?? '');
-    // Set initial category
+    _isFavorite = widget.password?.isFavorite ?? false;
+
     if (widget.password != null) {
       _selectedCategoryId = widget.password!.categoryId;
     } else if (widget.categories.isNotEmpty) {
-      _selectedCategoryId = widget.categories.first.id;
+      // Exclude 'Favorites' from being a default selection
+      _selectedCategoryId = widget.categories.firstWhere((c) => c.id != '0').id;
     }
   }
 
@@ -44,7 +47,6 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
   void _savePassword() {
     if (_formKey.currentState!.validate()) {
       if (_selectedCategoryId == null) {
-        // Show an error if no category is selected
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Please select a category.')),
         );
@@ -60,6 +62,7 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
         password: _passwordController.text,
         categoryId: _selectedCategoryId!,
         categoryName: selectedCategory.name,
+        isFavorite: _isFavorite, // Save favorite status
       );
       Navigator.pop(context, newPassword);
     }
@@ -143,7 +146,10 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
                     labelText: 'Category',
                     border: OutlineInputBorder(),
                   ),
-                  items: widget.categories.map((Category category) {
+                  // Exclude 'Favorites' from selectable options
+                  items: widget.categories
+                      .where((c) => c.id != '0')
+                      .map((Category category) {
                     return DropdownMenuItem<String>(
                       value: category.id,
                       child: Text(category.name),
@@ -154,8 +160,20 @@ class _PasswordDetailScreenState extends State<PasswordDetailScreen> {
                       _selectedCategoryId = newValue;
                     });
                   },
-                  validator: (value) => value == null ? 'Please select a category' : null,
+                  validator: (value) =>
+                      value == null ? 'Please select a category' : null,
                 ),
+              const SizedBox(height: 16),
+              // Add toggle for 'isFavorite'
+              SwitchListTile(
+                title: const Text('Add to Favorites'),
+                value: _isFavorite,
+                onChanged: (bool value) {
+                  setState(() {
+                    _isFavorite = value;
+                  });
+                },
+              ),
             ],
           ),
         ),
