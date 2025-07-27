@@ -14,23 +14,23 @@ class MyApp extends StatelessWidget {
       title: 'Password Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // 使用蓝色作为种子颜色
+        // 使用红色作为种子颜色
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: Colors.red,
         ),
-        // 直接设置背景色为浅蓝色
-        scaffoldBackgroundColor: Colors.blue.shade100,
+        // 直接设置背景色为浅红色
+        scaffoldBackgroundColor: Colors.red.shade100,
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
-        // 暗色模式下使用蓝色主色调
+        // 暗色模式下使用红色主色调
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: Colors.red,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
       ),
-      // 统一使用浅色模式，以突出浅蓝色背景效果
+      // 统一使用浅色模式，以突出浅红色背景效果
       themeMode: ThemeMode.light,
       home: const PasswordListScreen(),
     );
