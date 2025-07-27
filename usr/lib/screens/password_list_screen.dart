@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/password.dart';
-import '../screens/news_screen.dart'; // Import the new news screen
+import 'settings_screen.dart'; // Import the new settings screen
 import 'password_detail_screen.dart';
+import 'news_screen.dart';
 
 class PasswordListScreen extends StatefulWidget {
   const PasswordListScreen({super.key});
@@ -12,7 +13,7 @@ class PasswordListScreen extends StatefulWidget {
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
   // Sample data for categories
-  final List<Category> _categories = [
+  List<Category> _categories = [
     Category(id: '1', name: 'Work'),
     Category(id: '2', name: 'Social'),
     Category(id: '3', name: 'Entertainment'),
@@ -65,12 +66,28 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
     });
   }
 
-    // Navigate to news screen
+  // Navigate to news screen
   void _navigateToNews(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const NewsScreen()),
     );
+  }
+
+  // Navigate to settings screen
+  void _navigateToSettings(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(categories: _categories),
+      ),
+    );
+
+    if (result != null && result is List<Category>) {
+      setState(() {
+        _categories = result;
+      });
+    }
   }
 
   // Build password list for a specific category
@@ -93,8 +110,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       itemBuilder: (context, index) {
         final password = passwordsInCategory[index];
         // Find original index for editing
-        final originalIndex =
-            _passwords.indexWhere((p) => p.id == password.id);
+        final originalIndex = _passwords.indexWhere((p) => p.id == password.id);
         return ListTile(
           leading: const Icon(Icons.vpn_key),
           title: Text(password.website),
@@ -125,6 +141,11 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               icon: const Icon(Icons.article_outlined),
               tooltip: 'China News',
               onPressed: () => _navigateToNews(context),
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              tooltip: 'Settings',
+              onPressed: () => _navigateToSettings(context),
             ),
           ],
           bottom: TabBar(
