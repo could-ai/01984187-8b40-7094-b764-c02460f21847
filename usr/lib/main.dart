@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.red,
         ),
-        // 直接设置背景色为浅红色
-        scaffoldBackgroundColor: Colors.red.shade100,
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
@@ -28,10 +26,12 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.red,
           brightness: Brightness.dark,
         ),
+        // 设置深色背景
+        scaffoldBackgroundColor: const Color(0xFF121212),
         useMaterial3: true,
       ),
-      // 统一使用浅色模式，以突出浅红色背景效果
-      themeMode: ThemeMode.light,
+      // 使用暗色模式
+      themeMode: ThemeMode.dark,
       home: const PasswordListScreen(),
     );
   }
