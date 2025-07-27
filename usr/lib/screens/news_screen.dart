@@ -4,36 +4,36 @@ import '../models/news_article.dart';
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
 
-  // Static list of news articles as placeholder data
+  // Static list of news articles as placeholder data for Vietnam
   final List<NewsArticle> _articles = const [
     NewsArticle(
-      title: 'National Economy Shows Steady Growth in Q3',
-      source: 'National News Agency',
+      title: 'Vietnam\'s Economic Growth Surpasses Regional Forecasts',
+      source: 'Vietnam News Agency',
       date: '2023-10-26',
     ),
     NewsArticle(
-      title: 'New Advancements in Renewable Energy Unveiled at Summit',
-      source: 'Science Today',
+      title: 'Hanoi Launches New Initiative to Preserve Old Quarter',
+      source: 'Hanoi Times',
       date: '2023-10-26',
     ),
     NewsArticle(
-      title: 'Cultural Heritage Sites Receive Increased Protection Status',
-      source: 'Ministry of Culture',
+      title: 'Da Nang Hosts International Tech Conference',
+      source: 'Saigon Tech Post',
       date: '2023-10-25',
     ),
     NewsArticle(
-      title: 'Tech Giant Announces Breakthrough in AI Development',
-      source: 'Tech Chronicle',
+      title: 'Vietnamese Coffee Exports See Record Highs This Year',
+      source: 'Vietnam Business',
       date: '2023-10-25',
     ),
     NewsArticle(
-      title: 'Nationwide Infrastructure Projects Boost Connectivity',
-      source: 'Transport Gazette',
+      title: 'New National Park Established in the Mekong Delta',
+      source: 'Ministry of Environment',
       date: '2023-10-24',
     ),
     NewsArticle(
-      title: 'Agricultural Sector Reports Bumper Harvest Season',
-      source: 'Farmers Daily',
+      title: 'Cultural Festival in Hue Attracts Global Tourists',
+      source: 'Vietnam Tourism Board',
       date: '2023-10-23',
     ),
   ];
@@ -42,7 +42,7 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Today\'s China News'),
+        title: const Text('Today\'s Vietnam News'),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),

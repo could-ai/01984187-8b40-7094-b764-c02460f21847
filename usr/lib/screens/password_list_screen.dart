@@ -126,7 +126,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
           actions: [
             IconButton(
               icon: const Icon(Icons.article_outlined),
-              tooltip: 'China News',
+              tooltip: 'Vietnam News',
               onPressed: () => _navigateToNews(context),
             ),
           ],
